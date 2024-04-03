@@ -19,21 +19,25 @@ public partial class CameraRender : MonoBehaviour
 
     Camera camera;
     Lighting lighting = new Lighting();
-    public void Render(ScriptableRenderContext context, Camera camera, bool useDynamicBatching, bool useGPUInstancing)
+    public void Render(ScriptableRenderContext context, Camera camera, bool useDynamicBatching, bool useGPUInstancing, ShadowSettings shadowSettings)
     {
         this.context = context;
         this.camera = camera;
         PrepareBuffer();
         PrepareForSceneWindow();
-        if (!Cull())
+        if (!Cull(shadowSettings.maxDistance))
         {
             return;
         }
+        buffer.BeginSample(SampleName);
+        ExecuteBuffer();
+        lighting.Setup(context, cullingResults, shadowSettings);
+        buffer.EndSample(SampleName);
         Setup();
-        lighting.Setup(context,cullingResults);
         DrawVisibleGeometry(useDynamicBatching, useGPUInstancing);
         DrawUnSupportShaders();
         DrawGizmos();
+        lighting.Cleanup();
         Submit();
     }
     private void Setup()
@@ -45,12 +49,13 @@ public partial class CameraRender : MonoBehaviour
         buffer.BeginSample(SampleName);
         ExecuteBuffer();
     }
-    private bool Cull()
+    private bool Cull(float maxShadowDistance)
     {
         if (!camera.TryGetCullingParameters(out var cullingParameters))
         {
             return false;
         }
+        cullingParameters.shadowDistance = Mathf.Min(maxShadowDistance, camera.farClipPlane);
         cullingResults = context.Cull(ref cullingParameters);
         return true;
     }

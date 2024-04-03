@@ -10,27 +10,31 @@ Material:
   m_Name: Custom RP_Lit
   m_Shader: {fileID: 4800000, guid: 8fcbb80fb8434f646ad1cd63bfc15176, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _PREMILTIPLY_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: e5ed0b27971ca914ba3f5c06d48d9f69, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _Clipping: 0
-    - _Cutoff: 0.5
-    - _DstBlend: 0
+    - _Cutoff: 0.516
+    - _DstBlend: 10
+    - _Metallic: 0
+    - _PremulAlpha: 1
+    - _Smoothness: 0.697
     - _SrcBlend: 1
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _BaseColor: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
   m_BuildTextureStacks: []
